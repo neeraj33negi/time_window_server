@@ -12,13 +12,16 @@ module TimeWindowServer
         current_hour = current_time.hour
 
         if current_hour < BEGIN_HOUR || current_time > END_HOUR
+          body = { status: :unvailable, message: "Available b/w hours #{BEGIN_HOUR} to #{END_HOUR}" }
           [
             503,
             {
-              "Content-Type" => "application/json"
+              "Content-Type" => "application/json",
               "Content-Length" => body.bytesize.to_s,
             },
-            [{ status: :unvailable, message: "Available b/w hours #{BEGIN_HOUR} to #{END_HOUR}" }.to_json]
+            [
+              body.to_json
+            ]
           ]
         else
           @app.call(env)
