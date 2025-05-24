@@ -2,7 +2,7 @@ module TimeWindowServer
   module Middlewares
     class TimeLimiter
       BEGIN_HOUR = 7
-      END_HOUR = 20
+      END_HOUR = 15
       def initialize(app)
         @app = app
       end
