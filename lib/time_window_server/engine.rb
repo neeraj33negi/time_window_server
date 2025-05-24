@@ -1,3 +1,5 @@
+require 'time_window_server/middlewares/time_limiter'
+
 module TimeWindowServer
   class Engine < ::Rails::Engine
     isolate_namespace TimeWindowServer
