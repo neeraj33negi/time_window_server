@@ -1,18 +1,17 @@
 module TimeWindowServer
   module Middlewares
     class TimeLimiter
-      BEGIN_HOUR = 7
-      END_HOUR = 15
-      def initialize(app)
+      def initialize(app, config)
         @app = app
+        @config = config
       end
 
       def call(env)
-        current_time = Time.current
+        current_time = Time.now.in_time_zone(@config.time_zone)
         current_hour = current_time.hour
 
-        if current_hour < BEGIN_HOUR || current_time > END_HOUR
-          body = { status: :unvailable, message: "Available b/w hours #{BEGIN_HOUR} to #{END_HOUR}" }.to_json
+        if current_hour < @config.start_hour || current_time > @config.end_hour
+          body = { status: :unvailable, message: "Available b/w hours #{@config.start_hour} to #{@config.end_hour}" }.to_json
           [
             503,
             {
