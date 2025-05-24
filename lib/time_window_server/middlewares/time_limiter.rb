@@ -11,7 +11,7 @@ module TimeWindowServer
         current_time = Time.current
         current_hour = current_time.hour
 
-        if current_hour < BEGIN_HOUR && current_time > END_HOUR
+        if current_hour < BEGIN_HOUR || current_time > END_HOUR
           [
             503,
             { "Content-Type" => "application/json" },
